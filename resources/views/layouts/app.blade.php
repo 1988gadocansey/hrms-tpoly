@@ -324,6 +324,102 @@
                 </div>
             </li>
             @endif
+             @if( Auth::user()->role=='finance')
+              <li data-uk-dropdown class="uk-hidden-small">
+                <a href="#"> <i class="sidebar-menu-icon material-icons">work</i><span>Finance and NHIS</span></a>
+                <div class="uk-dropdown uk-dropdown-scrollable">
+                     <ul class="uk-nav uk-nav-dropdown">
+                        <li><a href='{!! url("create_bank") !!}'>Create Banks</a></li>
+                        <li><a href='{!! url("banks") !!}'>View Banks</a></li>
+                        <li><a href='{!! url("create_fees") !!}'>Create Fees</a></li>
+                        <li><a href='{!! url("upload_fees") !!}'>Upload New Fees</a></li>
+                        <li><a href='{!! url("view_fees") !!}'>View Fees</a></li>
+                        
+                        <li><a href='{!! url("pay_fees") !!}'>Pay Fees</a></li>
+                         <li><a href='{!! url("view_payments_master") !!}'>Master Fee Payment Report</a></li>
+                     
+                        <li><a href='{!! url("owing_paid") !!}'>Owing reports</a></li>
+                          <li><a href='{!! url("view_payments") !!}'>Transactions Ledger</a></li>
+                      
+                          <li><a href='{!! url("fee_summary") !!}'>Fee Summary</a></li>
+                       
+                         
+                    </ul>
+                </div>
+            </li>
+             
+             @endif
+              @if( Auth::user()->role=='pharmacy')
+                <li data-uk-dropdown class="uk-hidden-small">
+                <a href="#"> <i class="sidebar-menu-icon material-icons">work</i><span>Dispensary</span></a>
+                <div class="uk-dropdown uk-dropdown-scrollable">
+                    <ul class="uk-nav uk-nav-dropdown">
+                        <li><a href="components_accordion.html">Accordions</a></li>
+                        <li><a href="components_buttons.html"> Buttons</a></li>
+                        <li><a href="components_cards.html">Cards</a></li>
+                        <li><a href="components_colors.html">Colors</a></li>
+                        <li><a href="components_common.html">Common</a></li>
+                        <li><a href="components_dropdowns.html">Dropdowns</a></li>
+                        <li><a href="components_dynamic_grid.html">Dynamic Grid</a></li>
+                        <li><a href="components_grid.html">Grid</a></li>
+                        <li><a href="components_icons.html">Icons</a></li>
+                        <li><a href="components_modal.html">Lightbox/Modal</a></li>
+                        <li><a href="components_lists.html">Lists</a></li>
+                        <li><a href="components_nestable.html">Nestable</a></li>
+                        <li><a href="components_notifications.html">Notifications</a></li>
+                        <li><a href="components_preloaders.html">Preloaders</a></li>
+                        <li><a href="components_sortable.html">Sortable</a></li>
+                        <li><a href="components_tables.html">Tables</a></li>
+                        <li><a href="components_tables_examples.html">Tables Examples</a></li>
+                        <li><a href="components_tabs.html">Tabs</a></li>
+                        <li><a href="components_tooltips.html">Tooltips</a></li>
+                        <li><a href="components_typography.html">Typography</a></li>
+                    </ul>
+                </div>
+            </li>
+              @endif
+              @if( Auth::user()->role=='records')
+                <li data-uk-dropdown class="uk-hidden-small">
+                <a href="#"><i class="sidebar-menu-icon material-icons md-18">work</i><span>Records Section</span></a>
+                <div class="uk-dropdown uk-dropdown-scrollable">
+                    <ul class="uk-nav uk-nav-dropdown">
+                        <li><a href='{!! url("student_medicals") !!}'>Add Student Medicals</a></li> 
+                        <li><a href='{!! url("students") !!}'>View Students</a></li>
+                        <li><a href='{!! url("staff") !!}'>View Staff</a></li>
+                        
+                         <li><a href='{!! url("new_visit") !!}'>New Visit</a></li>
+                        <li><a href='{!! url("search_folder") !!}'> Search Folder</a></li>
+                        <li><a href="">Patients Register</a></li>
+                        <li><a href="components_cards.html">Attendance Register</a></li>
+                        
+                    </ul>
+                </div>
+            </li>
+              @endif
+               @if( Auth::user()->role=='Laboratory')
+                <li data-uk-dropdown class="uk-hidden-small">
+                <a href="#"> <i class="sidebar-menu-icon material-icons">work</i><span>Laboratory</span></a>
+                <div class="uk-dropdown uk-dropdown-scrollable">
+                    <ul class="uk-nav uk-nav-dropdown">
+                        <li><a href='{!! url("create_bank") !!}'>Create Banks</a></li>
+                        <li><a href='{!! url("banks") !!}'>View Banks</a></li>
+                        <li><a href='{!! url("create_fees") !!}'>Create Fees</a></li>
+                        <li><a href='{!! url("upload_fees") !!}'>Upload New Fees</a></li>
+                        <li><a href='{!! url("view_fees") !!}'>View Fees</a></li>
+                        
+                        <li><a href='{!! url("pay_fees") !!}'>Pay Fees</a></li>
+                         <li><a href='{!! url("view_payments_master") !!}'>Master Fee Payment Report</a></li>
+                     
+                        <li><a href='{!! url("owing_paid") !!}'>Owing reports</a></li>
+                          <li><a href='{!! url("view_payments") !!}'>Transactions Ledger</a></li>
+                      
+                          <li><a href='{!! url("fee_summary") !!}'>Fee Summary</a></li>
+                       
+                         
+                    </ul>
+                </div>
+            </li>
+               @endif
                <li data-uk-dropdown class="uk-hidden-small">
                 <a href="#"> <span class="menu_icon"><i class="material-icons">&#xE8C0;</i></span><span>Settings</span></a>
                 <div class="uk-dropdown uk-dropdown-scrollable">
