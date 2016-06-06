@@ -30,14 +30,27 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     });
-    Route::get('/tasks', 'TaskController@index');
-    Route::post('/task', 'TaskController@store');
-    Route::delete('/task/{task}', 'TaskController@destroy');
+    
+    // user routes for resets
+    // Registration routes...
+        Route::get('/register', 'Auth\AuthController@getRegister');
+        Route::post('/register', 'Auth\AuthController@postRegister');
+
+        // Password reset link request routes...
+        Route::get('/password/email', 'Auth\PasswordController@getEmail');
+        Route::post('/password/email', 'Auth\PasswordController@postEmail');
+
+        // Password reset routes...
+        Route::get('/reset', 'UserController@getReset');
+        Route::post('/reset', 'UserController@postReset');
+
+    
+    
     Route::controller('students', 'StudentController', [
         'anyData' => 'students.data',
         'getIndex' => 'students',
     ]);
-
+     
     // routes for learning
     Route::get('autocomplete', 'SearchController@index');
     Route::get('clone', function () {
@@ -49,11 +62,7 @@ Route::group(['middleware' => ['web']], function () {
         'getIndex' => 'banks',
         
     ]);
-    Route::get('/create_bank', 'BankController@form');
-    Route::post('/create_bank', 'BankController@store');
-    Route::get('/edit_bank/{id}/id', 'BankController@edit');
-    Route::post('/edit_bank/{id}/id', 'BankController@update');
-    
+   
     // fees route
     Route::controller('/view_fees', 'FeeController', [
         'anyData' => 'view_fees.data',
