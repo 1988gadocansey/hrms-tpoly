@@ -22,41 +22,30 @@ class PatientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     public function getIndex(Request $request)
+  public function getIndex(Request $request)
     {
         
-        return view('students.index');
+        return view('patient.index');
     }
     public function anyData(Request $request)
     {
          
-        $students = StudentModel::join('tpoly_programme', 'tpoly_students.PROGRAMMECODE', '=', 'tpoly_programme.PROGRAMMECODE')
-           ->select(['tpoly_students.ID', 'tpoly_students.NAME','tpoly_students.INDEXNO', 'tpoly_programme.PROGRAMME','tpoly_students.LEVEL','tpoly_students.INDEXNO','tpoly_students.SEX','tpoly_students.AGE','tpoly_students.TELEPHONENO','tpoly_students.COUNTRY','tpoly_students.GRADUATING_GROUP','tpoly_students.STATUS']);
-         
+         $patients = Models\PatientModel::select([ "*"]);
 
-
-        return Datatables::of($students)
-                         
-            ->addColumn('action', function ($student) {
-                 return "<a href=\"edit_student/$student->INDEXNO/id\" class=\"\"><i title='Click to view student details' class=\"md-icon material-icons\">&#xE88F;</i></a>";
-                 // use <i class=\"md-icon material-icons\">&#xE254;</i> for showing editing icon
-                //return' <td> <a href=" "><img class="" style="width:70px;height: auto" src="public/Albums/students/'.$student->INDEXNO.'.JPG" alt=" Picture of Employee Here"    /></a>df</td>';
-                          
-                                         
-            })
-               ->editColumn('id', '{!! $ID!!}')
-            ->addColumn('Photo', function ($student) {
-               // return '<a href="#edit-'.$student->ID.'" class="md-btn md-btn-primary md-btn-small md-btn-wave-light waves-effect waves-button waves-light">View</a>';
-            
-                return' <a href="show_student/'.$student->INDEXNO.'/id"><img class="md-user-image-large" style="width:60px;height: auto" src="Albums/students/'.$student->INDEXNO.'.JPG" alt=" Picture of Student Here"    /></a>';
-                          
-                                         
-            })
+        return Datatables::of($patients)
+            ->addColumn('action', function ($patient) {
+                return
+                 "<a href=\"editPatient/$patient->id/id\" ><i title='click to edit patient data'class=\"md-icon material-icons\">&#xE254;</i></a> 
+           
+                 <a href=\"showPatient/$patient->id/id\" class=\"\"><i title='Click to view patient history details' class=\"md-icon material-icons\">&#xE88F;</i></a>";
               
+                
+            })
             
+            ->editColumn('id', ' {{$id}}')
             ->setRowId('id')
-            ->setRowClass(function ($student) {
-                return $student->ID % 2 == 0 ? 'uk-text-success' : 'uk-text-warning';
+            ->setRowClass(function ($patient) {
+                return $patient->ID % 2 == 0 ? 'uk-text-success' : 'uk-text-warning';
             })
             ->setRowData([
                 'id' => 'test',
@@ -64,15 +53,14 @@ class PatientController extends Controller
             ->setRowAttr([
                 'color' => 'red',
             ])
-                  
+            
             ->make(true);
-             
-            //flash the request so it can still be available to the view or search form and the search parameters shown on the form 
-      //$request->flash();
+                          
     }
     public function showMedicalForm(Request $request) {
         return view("patient.students.medicals");
     }
+    
     public function processMedicalForm(Request $request) {
         
         $student=  explode(',',$request->input('q'));
@@ -97,6 +85,29 @@ class PatientController extends Controller
          $test = \DB::table('tpoly_tests')
                 ->lists('NAME', 'ID');
         return $test;
+    }
+    public function getDrugs(){
+         $drug = \DB::table('tpoly_drugs')
+                ->lists('NAME', 'ID');
+        return $drug;
+    }
+    // get one patient visit history from the attendance table
+    public function getHistory($patient){
+         $history = Models\AttendanceModel::query()->where('patient',$patient)->orderby('date','DESC')
+                ->paginate(100);
+        return $history;
+    }
+    // lab history of patient here
+    public function getLabHistory($patient){
+         $history = Models\LabModel::query()->where('patient',$patient)->orderby('DATE','DESC')
+                ->paginate(100);
+        return $history;
+    }
+    // drug dispensary history of patient here
+    public function getDrugHistory($patient){
+         $history = Models\PrescriptionModel::query()->where('patient_id',$patient)->orderby('timestamp','DESC')
+                ->paginate(100);
+        return $history;
     }
     public function storeMedicals(Request $request) {
          //get the current user in session
@@ -236,6 +247,40 @@ class PatientController extends Controller
         }
                
     }
+    
+    public function showOldVistForm(Request $request) {
+        return view("patient.old_visit");
+    }
+    public function processOldVisitForm(Request $request) {
+        $patient=  explode(',',$request->input('q'));
+        $patient=$patient[0];
+        $history=  $this->getHistory($patient);
+        $lab=  $this->getLabHistory($patient);
+        $drug=  $this->getDrugHistory($patient);
+        $sql= Models\PatientModel::where("hospital_id",$patient)->get();
+        
+         if(count($sql)==0){
+      
+          return redirect("/patients")->with("error","<span style='font-weight:bold;font-size:13px;'> $request->input('q') does not exist!</span>");
+          }
+          else{
+            if(\Auth::user()->role=='doctor'){
+               return view("patient.visit_transaction")->with( 'data',$sql)->with('drug', $this->getDrugs())->with('test',$this->getTests())->with('history',$history)->with('lab',$lab)->with('drug',$drug);
+            }
+            elseif (\Auth::user()->role=='records') {
+                 return view("patient.records_visit_transaction")->with( 'data',$sql)->with('drug', $this->getDrugs())->with('test',$this->getTests())->with('history',$history)->with('lab',$lab)->with('drug',$drug);
+        
+            }
+            elseif (\Auth::user()->role=='pharmacy') {
+                 return view("patient.pharmacy_visit_transaction")->with( 'data',$sql)->with('drug', $this->getDrugs())->with('test',$this->getTests())->with('history',$history)->with('lab',$lab)->with('drug',$drug);
+        
+            }
+             elseif (\Auth::user()->role=='Laboratory') {
+                 return view("patient.lab_visit_transaction")->with( 'data',$sql)->with('drug', $this->getDrugs())->with('test',$this->getTests())->with('history',$history)->with('lab',$lab)->with('drug',$drug);
+        
+            }
+          }
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -260,8 +305,86 @@ class PatientController extends Controller
         
     }
     public function showVisitForm(Request $request) {
-        return view('patient.new_visit');
+        $sys=new SystemController();
+        return view('patient.new_visit')->with('staff',$sys->getstaffList())
+                ->with('student',$sys->getstudentList());
     }
+    public function storeVist(Request $request) {
+        
+         $this->validate($request, ['title' => 'required', 'fname' => 'required', 'surname' => 'required', 'dob' => 'required', 'gender' => 'required', 'marital_status' => 'required', 'temperature' => 'required', 'contact' => 'required', 'hometown' => 'required', 'dob' => 'required', 'phone' => 'required', 'height' => 'required', 'weight' => 'required','bp' => 'required' ]);
+        $user=\Auth::id();
+        $sys=new SystemController();
+        $code=$sys->getHospitalID();
+        $hospitalCode=\date("Y").$code[0];
+        $patientModel=new Models\PatientModel();
+        $patientModel->hospital_id=$hospitalCode;
+        $patientModel->title=$request->input("title");
+        $patientModel->firstname=$request->input('fname');
+        $patientModel->othername=$request->input('othernames');
+        $patientModel->surname=$request->input('surname');
+        $patientModel->date_of_birth=$request->input('dob');
+        $patientModel->age=$sys->age($request->input('dob'),'eu');
+        $patientModel->sex=$request->input('gender');
+        $patientModel->nhis_id=$request->input('nhis');
+        $patientModel->cs_number=$request->input('csno');
+        $patientModel->marital_status=$request->input('marital_status');
+        $patientModel->occupation=$request->input('occupation');
+        $patientModel->address=$request->input('contact');
+        $patientModel->contact_number=$request->input('phone');
+        $patientModel->placeofResidence=$request->input('hometown');
+        $patientModel->lastVisit=$request->input('lastVisit');
+        $patientModel->referedFrom=$request->input('referer');
+        $patientModel->staff=$request->input('staff');
+        $patientModel->student=$request->input('student');
+        $patientModel->enteredBy=$user;
+        $vitals=new Models\VitalsModel();
+        //$patient=$patientModel->save()->id;
+        if($patientModel->save()){
+            
+         $vitals->BP=$request->input('bp');
+         $vitals->PATIENT=$hospitalCode;
+         $vitals->TEMPERATURE=$request->input('temperature');
+         $vitals->HEIGHT=$request->input('height');
+         $vitals->WEIGHT=$request->input('weight');
+         $vitals->ENTERED_BY=$user;
+         
+         // push the patient into the patient queue
+         $queue=new Models\QueueModel();
+            if($vitals->save()){
+                $queue->PATIENT=$hospitalCode;
+                $queue->PUSHED_BY=$user;
+                if($queue->save()){
+                    \DB::table('tpoly_hospitalid')->increment("NO");
+                  return redirect("/patients")->with("success",array("<span style='font-weight:bold;font-size:13px;'>  Patient with hospital code $hospitalCode successfully saved!</span> "));
+                    
+                  
+                }
+            }
+         }
+        else{
+            redirect()->back()->withErrors('error', 'Error in saving records');
+        }
+    }
+  
+    
+     
+    public function saveVisit(Request $request) {
+            $user=\Auth::id();
+            $sys=new SystemController();
+            $code=$sys->getHospitalID();
+            $hospitalCode=\date("Y").$code[0];
+            if(\Auth::user()->role=='records'){
+                $this->validate($request, ['title' => 'required', 'fname' => 'required', 'surname' => 'required', 'dob' => 'required', 'gender' => 'required', 'marital_status' => 'required', 'temperature' => 'required', 'contact' => 'required', 'hometown' => 'required', 'dob' => 'required', 'phone' => 'required', 'height' => 'required', 'weight' => 'required','bp' => 'required' ]);
+
+                 $patientModel=new Models\PatientModel();
+                 $patientModel->hospital_id=$hospitalCode;
+                 $patientModel->title=$request->input("title");
+                 $patientModel->firstname=$request->input('fname');
+                 $patientModel->othername=$request->input('othernames');
+            }
+    }
+    
+    
     /**
      * Display the specified resource.
      *

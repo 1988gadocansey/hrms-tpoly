@@ -25,8 +25,8 @@
       <link rel="stylesheet" href="{!! url('assets/css/dropify.css') !!}" media="all">
      <link rel="stylesheet" href="{!! url( 'datatables/css/jquery.dataTables.min.css')  !!}" >
    <link rel="stylesheet" href="{!! url( 'datatables/css/dataTables.uikit.min.css')  !!}" >
+    <link rel="stylesheet" href="{!! url( 'datatables/css/buttons.dataTables.css')  !!}" >
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
     
     @yield('style')
  
@@ -188,10 +188,10 @@
                         <li><a href='{!! url("students") !!}'>View Students</a></li>
                          
                          <li><a href='{!! url("new_visit") !!}'>New Visit</a></li>
-                         <li><a href='{!! url("old_visit") !!}'>Old Visit</a></li>
+                         <li><a href='{!! url("patient_queue") !!}'>Patients Queue</a></li>
                         <li><a href='{!! url("search_folder") !!}'> Search Folder</a></li>
-                        <li><a href="">Patients Register</a></li>
-                        <li><a href="components_cards.html">Attendance Register</a></li>
+                        <li><a href='{!! url("patients") !!}'>Patients Register</a></li>
+                        <li><a href='{!! url("attendance") !!}'>Attendance Register</a></li>
                         
                     </ul>
                 </div>
@@ -200,26 +200,14 @@
                 <a href="#"><i class="sidebar-menu-icon material-icons md-18">book</i><span>Consulting Room</span></a>
                 <div class="uk-dropdown uk-dropdown-scrollable">
                     <ul class="uk-nav uk-nav-dropdown">
-                        <li><a href="components_accordion.html">Accordions</a></li>
-                        <li><a href="components_buttons.html"> Buttons</a></li>
-                        <li><a href="components_cards.html">Cards</a></li>
-                        <li><a href="components_colors.html">Colors</a></li>
-                        <li><a href="components_common.html">Common</a></li>
-                        <li><a href="components_dropdowns.html">Dropdowns</a></li>
-                        <li><a href="components_dynamic_grid.html">Dynamic Grid</a></li>
-                        <li><a href="components_grid.html">Grid</a></li>
-                        <li><a href="components_icons.html">Icons</a></li>
-                        <li><a href="components_modal.html">Lightbox/Modal</a></li>
-                        <li><a href="components_lists.html">Lists</a></li>
-                        <li><a href="components_nestable.html">Nestable</a></li>
-                        <li><a href="components_notifications.html">Notifications</a></li>
-                        <li><a href="components_preloaders.html">Preloaders</a></li>
-                        <li><a href="components_sortable.html">Sortable</a></li>
-                        <li><a href="components_tables.html">Tables</a></li>
-                        <li><a href="components_tables_examples.html">Tables Examples</a></li>
-                        <li><a href="components_tabs.html">Tabs</a></li>
-                        <li><a href="components_tooltips.html">Tooltips</a></li>
-                        <li><a href="components_typography.html">Typography</a></li>
+                        <li><a href='{!! url("students") !!}'>View Students</a></li>
+                         
+                         <li><a href='{!! url("new_visit") !!}'>New Visit</a></li>
+                         <li><a href='{!! url("patient_queue") !!}'>Patients Queue</a></li>
+                        <li><a href='{!! url("search_folder") !!}'> Search Folder</a></li>
+                        <li><a href='{!! url("patients") !!}'>Patients Register</a></li>
+                        <li><a href='{!! url("attendance") !!}'>Attendance Register</a></li>
+                        
                     </ul>
                 </div>
             </li>
@@ -229,6 +217,7 @@
                 <div class="uk-dropdown uk-dropdown-scrollable">
                     <ul class="uk-nav uk-nav-dropdown">
                         <li><a href='{!! url("create_bank") !!}'>View Patients</a></li>
+                        <li><a href='{!! url("patient_queue") !!}'>Patients Waiting</a></li>
                         <li><a href='{!! url("student_medicals") !!}'>Student Medicals</a></li> 
                         <li><a href='{!! url("create_fees") !!}'>Create Tests</a></li>
                         <li><a href='{!! url("create_fees") !!}'>View Tests</a></li>
@@ -244,6 +233,7 @@
                 <div class="uk-dropdown uk-dropdown-scrollable">
                     <ul class="uk-nav uk-nav-dropdown">
                         <li><a href='{!! url("/patients") !!}'>View Patients</a></li>
+                        <li><a href='{!! url("patient_queue") !!}'>Patients Waiting</a></li>
                         <li><a href='{!! url("/add_drug") !!}'>Create Drug Categories</a></li>
                         <li><a href='{!! url("/add_drug") !!}'>Add Drugs</a></li>
                         <li><a href='{!! url("/add_drug") !!}'>View Drug sheet</a></li>
@@ -306,7 +296,8 @@
                 <a href="#"> <i class="sidebar-menu-icon material-icons">work</i><span>Dispensary</span></a>
                 <div class="uk-dropdown uk-dropdown-scrollable">
                     <ul class="uk-nav uk-nav-dropdown">
-                          <li><a href='{!! url("/patients") !!}'>View Patients</a></li>
+                        <li><a href='{!! url("/patients") !!}'>View Patients</a></li>
+                        <li><a href='{!! url("patient_queue") !!}'>Patients Waiting</a></li>
                         <li><a href='{!! url("/add_drug") !!}'>Create Drug Categories</a></li>
                         <li><a href='{!! url("/add_drug") !!}'>Add Drugs</a></li>
                         <li><a href='{!! url("/add_drug") !!}'>View Drug sheet</a></li>
@@ -322,14 +313,15 @@
                 <div class="uk-dropdown uk-dropdown-scrollable">
                     <ul class="uk-nav uk-nav-dropdown">
                         
+                       
                         <li><a href='{!! url("students") !!}'>View Students</a></li>
-                        <li><a href='{!! url("staff") !!}'>View Staff</a></li>
-                        
+                         
                          <li><a href='{!! url("new_visit") !!}'>New Visit</a></li>
+                         <li><a href='{!! url("patient_queue") !!}'>Patients Waiting</a></li>
                         <li><a href='{!! url("search_folder") !!}'> Search Folder</a></li>
-                        <li><a href="">Patients Register</a></li>
-                        <li><a href="components_cards.html">Attendance Register</a></li>
-                        
+                        <li><a href='{!! url("patients") !!}'>Patients Register</a></li>
+                        <li><a href='{!! url("attendance") !!}'>Attendance Register</a></li>
+                       
                     </ul>
                 </div>
             </li>
@@ -340,6 +332,7 @@
                 <div class="uk-dropdown uk-dropdown-scrollable">
                     <ul class="uk-nav uk-nav-dropdown">
                         <li><a href='{!! url("create_bank") !!}'>View Patients</a></li>
+                         <li><a href='{!! url("patient_queue") !!}'>Patients Waiting</a></li>
                         <li><a href='{!! url("student_medicals") !!}'>Student Medicals</a></li> 
                         <li><a href='{!! url("create_fees") !!}'>Create Tests</a></li>
                         <li><a href='{!! url("create_fees") !!}'>View Tests</a></li>
@@ -372,7 +365,7 @@
                 <a href="#"> <span class="menu_icon"><i class="material-icons">user</i></span><span>My Account</span></a>
                 <div class="uk-dropdown uk-dropdown-scrollable">
                     <ul class="uk-nav uk-nav-dropdown">
-                        <li><a href='{!! url("/profile") !!}'>Profile</a></li>
+                       
                         <li><a href='{!! url("/reset") !!}'>Change Password</a></li>
                         <li><a href='{!! url("/logout") !!}'>Logout</a></li>
                     </ul>
@@ -403,12 +396,9 @@
 <script src="{!! url('assets/js/altair_admin_common.min.js') !!}"></script>
 <script src="{!! url('assets/js/uikit/uikit.min.js') !!}"></script>
  <!-- select2 conflict with clonning so incude only on pages that's there's no cloning -->
- <!--<script src="{!! url('assets/js/select2.min.js') !!}"></script>-->
+ 
 <script src='{!! url( "assets/plugins/sweet-alert/sweet-alert.min.js")  !!}' ></script>
-<!-- jquery steps -->
-    <script src="{!!url('assets/js/custom/wizard_steps.min.js')!!}"></script>
-   <!--  forms wizard functions -->
-    <script src="{!!url('assets/js/pages/forms_wizard.min.js')!!}"></script>
+
 <script src="{!! url('assets/js/vue.min.js') !!}"></script>
 <script src="{!! url('assets/js/vue-form.min.js') !!}"></script>
 <script src="{!! url('assets/js/jquery-ui.min.js') !!}"></script>
@@ -426,7 +416,8 @@
  <script src="{!! url('datatables/js/dataTables.uikit.min.js') !!}"></script> 
   <script src="{!! url('datatables/js/plugins_datatables.min.js') !!}"></script>
  <script src="{!! url('datatables/js/datatables_uikit.min.js') !!}"></script> 
- 
+   <script src="{!! url('datatables/js/buttons.print.js') !!}"></script> 
+   
      @yield('js')
 
      <script type="text/javascript">

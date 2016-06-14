@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 
-class LabModel extends Model
+class PrescriptionModel extends Model
 {
     //
     /**
@@ -13,15 +13,15 @@ class LabModel extends Model
      *
      * @var string
      */
-    protected $table = 'tpoly_lab';
+    protected $table = 'tpoly_prescription';
     
     protected $primaryKey="ID";
     protected $guarded = ['ID'];
     public $timestamps = false;
    public function doctor(){
-        return $this->belongsTo('App\User', "CLINICIAN","id");
+        return $this->belongsTo('App\User', "doctor_id","id");
     }
-     public function testName(){
-        return $this->belongsTo('App\Models\TestModel', "TEST","ID");
+     public function drugName(){
+        return $this->belongsTo('App\Models\DrugModel', "drug","ID");
     }
 }

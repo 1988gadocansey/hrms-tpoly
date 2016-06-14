@@ -28,8 +28,47 @@ class SystemController extends Controller
          $program = \DB::table('tpoly_programme')
                 ->lists('PROGRAMME', 'PROGRAMMECODE');
          return $program;
+                
+
+    }
+     public function getstaffList() {
+         $student = \DB::table('tpoly_workers')
+                ->lists('NAME', 'id');
+         return $student;
+    }
+    public function getHospitalID() {
+         $no = \DB::table('tpoly_hospitalID')->lists('NO');
+                
+         return $no;
         
     }
+    public function getstudentList() {
+         $student = \DB::table('tpoly_students')
+                ->lists('NAME', 'ID');
+         return $student;
+        
+    }
+    public function getHispitalCode() {
+         $code = \DB::table('tpoly_hospitalid')
+                ->lists('NO');
+         
+         return $code;
+        
+    }
+     public function age($birthdate, $pattern = 'eu')
+        {
+            $patterns = array(
+                'eu'    => 'd/m/Y',
+                'mysql' => 'Y-m-d',
+                'us'    => 'm/d/Y',
+                'gh'    => 'd-m-Y',
+            );
+
+            $now      = new \DateTime();
+            $in       = \DateTime::createFromFormat($patterns[$pattern], $birthdate);
+            $interval = $now->diff($in);
+            return $interval->y;
+        }
      public function firesms($message,$phone,$receipient){
           
          
@@ -129,7 +168,7 @@ class SystemController extends Controller
                  $width = round($width * $percentage);
                 $height = round($height * $percentage);
 
-               return "width=\"$width\" height=\"$height\"";
+               echo "width=\"$width\" height=\"$height\"";
 
 
 

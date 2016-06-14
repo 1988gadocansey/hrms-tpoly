@@ -69,23 +69,23 @@ Route::group(['middleware' => ['web']], function () {
         'getIndex' => 'view_fees',
         
     ]);
-    Route::get('/create_fees', 'FeeController@createform');
-    Route::post('/create_fees', 'FeeController@store');
-    Route::get('/upload_fees', 'FeeController@showUpload');
-    Route::post('/upload_fees', 'FeeController@storeUpload');
-    Route::delete('/delete_fees', 'FeeController@destroy');
-     
-    Route::get('/run_bill/{id}/id', 'FeeController@approve');
-     
-    Route::get('/pay_fees', 'FeeController@showPayform');
-    Route::post('/pay_fees', 'FeeController@showStudent');
-    Route::post('/processPayment', 'FeeController@processPayment');
-    Route::get('/printreceipt/{receiptno}', 'FeeController@printreceipt');
-    Route::controller('/view_payments', 'PaymentController', [
-        'anyData' => 'view_payments.data',
-        'getIndex' => 'view_payments',
-        
+    
+    // records management routes
+    Route::get('/new_visit', 'PatientController@showVisitForm');
+    Route::post('/new_visit', 'PatientController@storeVist');
+    Route::post('/saveVisit', 'PatientController@saveVisit');
+    Route::get('/old_visit', 'PatientController@showOldVistForm');
+    Route::post('/old_visit', 'PatientController@processOldVisitForm');
+    Route::get('search', 'SearchController@searchPatients');
+    Route::controller('patients', 'PatientController', [
+        'anyData' => 'patients.data',
+        'getIndex' => 'patients',
     ]);
+    Route::get('/search_folder', 'PatientController@destroy');
+    Route::get('/register_', 'PatientController@patientHistory');
+    //Route::get('/attendance_', 'PatientController@attendanceRegister');
+    Route::resource('/attendance', 'AttendanceController');
+    
      Route::get('/view_payments_master', 'FeeController@masterLedger');
      Route::get('/fee_summary', 'FeeController@masterLedger');
      Route::get('/owing_paid', 'FeeController@owingAndPaid');
@@ -100,6 +100,6 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/student_medicals', 'PatientController@processMedicalForm');
     Route::post('/store_medicals', 'PatientController@storeMedicals');
     Route::get('/search_folder', 'PatientController@searchFolder');
-    Route::get('/new_visit', 'PatientController@showVisitForm');
+    
     Route::post('/search_folder', 'PatientController@displayFolder');
 });

@@ -39,6 +39,30 @@ class SearchController extends Controller
 return Response::json($results);
 }
 
+ public function searchPatients(){
+     
+	$term = Input::get('term');
+	 
+	$results = array();
+	
+	 
+	$queries = \DB::table('tpoly_hrms_patient')
+                ->where('hospital_id','LIKE', '%'.$term.'%')
+		->orwhere('nhis_id', 'LIKE', '%'.$term.'%')
+		->orWhere('surname', 'LIKE', '%'.$term.'%')
+                ->orWhere('firstname', 'LIKE', '%'.$term.'%')
+                ->orWhere('othername', 'LIKE', '%'.$term.'%')
+                
+		->take(500)->get();
+	
+	foreach ($queries as $query)
+	{
+	    $results[] = [ 'id' => $query->id, 'value' => $query->hospital_id.','.$query->firstname.','.$query->surname ];
+	}
+return Response::json($results);
+}
+
+
 public function folder(){
 	$term = Input::get('term');
 	
