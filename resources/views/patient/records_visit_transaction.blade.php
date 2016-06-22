@@ -5,7 +5,7 @@
 
 @endsection
 @section('content')
- @inject('sys', 'App\Http\Controllers\SystemController')
+@inject('sys', 'App\Http\Controllers\SystemController')
 <div class="md-card-content">
 
     @if($messages=Session::get("success"))
@@ -42,307 +42,315 @@
 
 <h5>Patient Form</h5>  
 <div class="uk-width-xLarge-1-1">
-     
-                <div align="center">
-                      <center align=" " class="style1">Personal Records of {!! $data[0]->title.' '.$data[0]->firstname.' '.$data[0]->othername.' '. $data[0]->surname!!}</center>
-                  </div>
-                  <div class="uk-grid uk-grid-medium uk-grid-width-medium-1-2 uk-grid-width-large-1-3" style="float: right">
-                               <table   border="0" bordercolor="">
-                         <tr>
-                             <td><a href=" "><img class="" style=" margin-top: "  <?php
-                                     $pic = $data[0]->INDEXNO;
-                                     echo $sys->picture("{!! url(\"albums/students/07130252.JPG\") !!}", 190)
-                                     ?>   src='{{url("albums/students/07130252.JPG")}}' alt=" Picture of Patient here"    /></a></td> 
 
-                         <p align="center">&nbsp;</p></td>
-                         </tr>
+    <div align="center">
+        <center align=" " class="style1">Personal Records of {!! $data[0]->title.' '.$data[0]->firstname.' '.$data[0]->othername.' '. $data[0]->surname!!}</center>
+    </div>
+    <div class="uk-grid uk-grid-medium uk-grid-width-medium-1-2 uk-grid-width-large-1-3" style="float: right">
+        <table   border="0" bordercolor="">
+            <tr>
+                <td><a href=" "><img class="" style=" margin-top: "  <?php
+                        $pic = $data[0]->INDEXNO;
+                        echo $sys->picture("{!! url(\"albums/students/07130252.JPG\") !!}", 190)
+                        ?>   src='{{url("albums/students/07130252.JPG")}}' alt=" Picture of Patient here"    /></a></td> 
+
+            <p align="center">&nbsp;</p></td>
+            </tr>
 
 
-                     </table>
-                        
-                </div>
-                <div class="uk-grid" data-uk-grid-margin data-uk-grid-match="{target:'.md-card-content'}">
-                <div class=" ">
-                    <div class="md-card">
-                        <div class="md-card-content">
-                            <table class="uk-table-no-border" border="0">
+        </table>
+
+    </div>
+    <div class="uk-grid" data-uk-grid-margin data-uk-grid-match="{target:'.md-card-content'}">
+        <div class=" ">
+            <div class="md-card">
+                <div class="md-card-content">
+                    <table class="uk-table-no-border" border="0">
                         <tr>
                             <td width="495"><div class="divcurve" style=" ">
 
 
 
                                     <table   class="">
-                                         <tr>
-                                             <th  align=""> <div  align="right" >Folder N<u>o</u></div></th>
+                                        <tr>
+                                            <th  align=""> <div  align="right" >Folder N<u>o</u></div></th>
                                         <td>
-                                                  {{ $data[0]->hospital_id}}
+                                            {{ $data[0]->hospital_id}}
                                         </td>
                                         </tr>
                                         <tr>
                                             <th  align=""> <div  align="right" >Full Name</div></th>
                                         <td>
-                                          {!! $data[0]->title.' '.$data[0]->firstname.' '.$data[0]->othername.' '. $data[0]->surname!!}   
+                                            {!! $data[0]->title.' '.$data[0]->firstname.' '.$data[0]->othername.' '. $data[0]->surname!!}   
                                         </td>
                                         </tr>
                                         <tr>
                                             <th  align=""> <div  align="right" >Gender</div></th>
                                         <td>
                                             {{ $data[0]->sex}}
-                                             
+
                                         </td>
                                         </tr>
-                                         
-                                        
+
+
                                         <tr>
                                             <th  align=""> <div  align="right" >Age</div></th>
                                         <td>
                                             {{ $data[0]->age}}yr(s)
-                                             
+
                                         </td>
                                         </tr>
-                                         <tr>
-                                             <th  align=""> <div  align="right" >NHIS N<u>o</u></div></th>
+                                        <tr>
+                                            <th  align=""> <div  align="right" >NHIS N<u>o</u></div></th>
                                         <td>
                                             {{  $data[0]->nhis_id}}
-                                            
+
                                         </td>
                                         </tr>
                                         <tr>
                                             <th  align=""> <div  align="right" >Last Visit</div></th>
                                         <td>
-                                              {{  $data[0]->lastVisit}}
+                                            {{  $data[0]->lastVisit}}
                                         </td>
                                         </tr>
-                                         
-                                         
+
+
                                     </table>
                                 </div>
                             </td></tr>
-                        
-                                        
-                         
-                                     </table>
-                        </div>
-                    </div>
+
+
+
+                    </table>
                 </div>
-                    
             </div>
+        </div>
+
+    </div>
     <p>&nbsp;</p>
-        
+
 </div>
 <p></p>
 <div class="uk-width-xLarge-1-1">
     <div class="md-card">
         <div class="md-card-content">
             <div class="uk-grid" data-uk-grid-margin>
-                 
-                   
-                  
 
-            <form  novalidate id="wizard_advanced_form" class="uk-form-stacked"   action="{!! url('saveVisit')  !!}" method="post" accept-charset="utf-8"  name="patientForm"  v-form>
 
-                {!!  csrf_field() !!}
-                <div data-uk-observe="" id="wizard_advanced" role="application" class="wizard clearfix">
-                    <div class="steps clearfix">
-                        <ul role="tablist">
-                            <li role="tab" class="fill_form_header first current" aria-disabled="false" aria-selected="true" v-bind:class="{ 'error' : !in_payment_section}">
-                                <a aria-controls="wizard_advanced-p-0" href="#wizard_advanced-h-0" id="wizard_advanced-t-0">
-                                    <span class="current-info audible">current step: </span><span class="number">1</span> <span class="title">Vitals</span>
-                                </a>
-                            </li>
-                            <li role="tab" class="payment_header disabled" aria-disabled="true"   v-bind:class="{ 'error' : in_payment_section}" >
-                                <a aria-controls="wizard_advanced-p-1" href="#wizard_advanced-h-1" id="wizard_advanced-t-1">
-                                    <span class="number">2</span> <span class="title">Consulting Room</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class=" clearfix " style="box-sizing: border-box;display: block;padding:15px!important;position: relative;">
 
-                        <!-- first section -->
-                        {{-- <h3 id="wizard_advanced-h-0" tabindex="-1" class="title current">Fill Form</h3> --}}
-                        <section id="fill_form_section" role="tabpanel" aria-labelledby="fill form section" class="body step-0 current" data-step="0" aria-hidden="false"   v-bind:class="{'uk-hidden': in_payment_section} ">
 
-                             <div data-uk-grid-margin="" class="uk-grid uk-grid-width-medium-1-4 uk-grid-width-large-1-4">
-                                 <div class="parsley-row">
-                                    <div class="uk-input-group">
+                <form  novalidate id="wizard_advanced_form" class="uk-form-stacked"   action="{!! url('saveVisit')  !!}" method="post" accept-charset="utf-8"  name="patientForm"  v-form>
 
-                                        <div class="md-input-wrapper md-input-filled"><label for="wizard_twitter">BP :</label><input type="text" name="bp" class="md-input" required=""  value="{{  old('bp','') }}"  v-model="bp"  v-form-ctrl   ><span class="md-input-bar"></span></div>
-                                     <p class="uk-text-danger uk-text-small"  v-if="patientForms.bp.$error.required">BP is required</p>                                        
-                                   
+                    {!!  csrf_field() !!}
+                    <div data-uk-observe="" id="wizard_advanced" role="application" class="wizard clearfix">
+                        <div class="steps clearfix">
+                            <ul role="tablist">
+                                <li role="tab" class="fill_form_header first current" aria-disabled="false" aria-selected="true" v-bind:class="{ 'error' : !in_payment_section}">
+                                    <a aria-controls="wizard_advanced-p-0" href="#wizard_advanced-h-0" id="wizard_advanced-t-0">
+                                        <span class="current-info audible">current step: </span><span class="number">1</span> <span class="title">Vitals</span>
+                                    </a>
+                                </li>
+                                <li role="tab" class="payment_header disabled" aria-disabled="true"   v-bind:class="{ 'error' : in_payment_section}" >
+                                    <a aria-controls="wizard_advanced-p-1" href="#wizard_advanced-h-1" id="wizard_advanced-t-1">
+                                        <span class="number">2</span> <span class="title">Consulting Room</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class=" clearfix " style="box-sizing: border-box;display: block;padding:15px!important;position: relative;">
+
+                            <!-- first section -->
+                            {{-- <h3 id="wizard_advanced-h-0" tabindex="-1" class="title current">Fill Form</h3> --}}
+                            <section id="fill_form_section" role="tabpanel" aria-labelledby="fill form section" class="body step-0 current" data-step="0" aria-hidden="false"   v-bind:class="{'uk-hidden': in_payment_section} ">
+
+                                <div data-uk-grid-margin="" class="uk-grid uk-grid-width-medium-1-4 uk-grid-width-large-1-4">
+                                    <div class="parsley-row">
+                                        <div class="uk-input-group">
+
+                                            <div class="md-input-wrapper md-input-filled"><label for="wizard_twitter">BP :</label><input type="text" name="bp" class="md-input" required=""  value="{{  old('bp','') }}"  v-model="bp"  v-form-ctrl   ><span class="md-input-bar"></span></div>
+                                            <p class="uk-text-danger uk-text-small"  v-if="patientForms.bp.$error.required">BP is required</p>                                        
+
+                                        </div>
                                     </div>
-                                </div>
 
 
-
-
-                                <div class="parsley-row">
-                                    <div class="uk-input-group">
-
-                                        <div class="md-input-wrapper md-input-filled"><label for="wizard_twitter">Temperature :</label><input type="text" name="temperature" required=""class="md-input"   value="{{  old('temperature','') }}"  v-model="temperature"  v-form-ctrl   ><span class="md-input-bar"></span></div>
-                                        <p class="uk-text-danger uk-text-small"  v-if="patientForms.temperature.$error.required">temerature  is required</p>                                        
-                                   
-                                    </div>
-                                </div>
-
-
-
-                                <div class="parsley-row">
-                                    <div class="uk-input-group">
-
-                                        <div class="md-input-wrapper md-input-filled"><label for="wizard_skype">Height :</label><input type="text" id="height"required=""   name="height" v-form-ctrl  class="md-input"   value="{{ old('height','') }}"  v-model="height"      /><span class="md-input-bar"></span></div>         
-                                         <p  class=" uk-text-danger uk-text-small  "   v-if="patientForms.height.$error.required">weight   is required</p>                                      
+                                    <input type="hidden" name="code" value="      {{ $data[0]->hospital_id}}"/>
                                  
+
+                                    <div class="parsley-row">
+                                        <div class="uk-input-group">
+
+                                            <div class="md-input-wrapper md-input-filled"><label for="wizard_twitter">Temperature :</label><input type="text" name="temperature" required=""class="md-input"   value="{{  old('temperature','') }}"  v-model="temperature"  v-form-ctrl   ><span class="md-input-bar"></span></div>
+                                            <p class="uk-text-danger uk-text-small"  v-if="patientForms.temperature.$error.required">temerature  is required</p>                                        
+
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="parsley-row">
-                                    <div class="uk-input-group">
 
-                                        <div class="md-input-wrapper md-input-filled"><label for="wizard_referer">Weight :</label><input type="text" id="weight" required=""name="weight" class="md-input"        value="{{ old('weight','') }}"   v-model="weight"  v-form-ctrl><span class="md-input-bar"></span></div>                
-                                        <p  class=" uk-text-danger uk-text-small  "   v-if="patientForms.weight.$error.required">weight   is required</p>                                      
+
+
+                                    <div class="parsley-row">
+                                        <div class="uk-input-group">
+
+                                            <div class="md-input-wrapper md-input-filled"><label for="wizard_skype">Height :</label><input type="text" id="height"required=""   name="height" v-form-ctrl  class="md-input"   value="{{ old('height','') }}"  v-model="height"      /><span class="md-input-bar"></span></div>         
+                                            <p  class=" uk-text-danger uk-text-small  "   v-if="patientForms.height.$error.required">weight   is required</p>                                      
+
+                                        </div>
                                     </div>
-                                </div>
+                                    <div class="parsley-row">
+                                        <div class="uk-input-group">
 
-
-
-                            </div>
-
-                             
-              
-                             
-                              
-
-
-                        </section>
-
-      <!-- second section -->
-      {{-- <h3 id="payment-heading-1" tabindex="-1" class="title">Payment</h3> --}}
-      <section id="payment_section" role="tabpanel" aria-labelledby="payment section" class="body step-1 "  v-bind:class="{'uk-hidden': !in_payment_section} "  data-step="1"  aria-hidden="true">
-        <h2 class="heading_a">
-         
-         <div data-uk-grid-margin="" class="uk-grid uk-grid-width-medium-1-4 uk-grid-width-large-1-4">
-                                 <div class="parsley-row">
-                                    <div class="uk-input-group">
-
-                                        <div class="md-input-wrapper md-input-filled"><label for="wizard_twitter">BP :</label><input type="text" name="bp" class="md-input"   value="{{  old('bp','') }}"  v-model="bp"  v-form-ctrl   ><span class="md-input-bar"></span></div>
-                                     <p class="uk-text-danger uk-text-small"  v-if="patientForms.bp.$error.required">BP is required</p>                                        
-                                   
+                                            <div class="md-input-wrapper md-input-filled"><label for="wizard_referer">Weight :</label><input type="text" id="weight" required=""name="weight" class="md-input"        value="{{ old('weight','') }}"   v-model="weight"  v-form-ctrl><span class="md-input-bar"></span></div>                
+                                            <p  class=" uk-text-danger uk-text-small  "   v-if="patientForms.weight.$error.required">weight   is required</p>                                      
+                                        </div>
                                     </div>
+
+
+
                                 </div>
 
 
 
 
-                               
 
 
-                            </div>
+
+                            </section>
+
+                            <!-- second section -->
+                            {{-- <h3 id="payment-heading-1" tabindex="-1" class="title">Payment</h3> --}}
+                            <section id="payment_section" role="tabpanel" aria-labelledby="payment section" class="body step-1 "  v-bind:class="{'uk-hidden': !in_payment_section} "  data-step="1"  aria-hidden="true">
+                                <h2 class="heading_a">
+
+                                    <div data-uk-grid-margin="" class="uk-grid uk-grid-width-medium-1-4 uk-grid-width-large-1-4">
+                                        <div class="parsley-row">
+                                            <div class="uk-input-group">
+
+                                                <label for="">Select Consulting Doctor :</label>     
+                                                <div class="md-input-wrapper md-input-filled">
+                                                    {!!   Form::select('doctor',$doctor,old('doctor',''),array("class"=>"md-input","id"=>"doctor","v-model"=>"doctor","v-form-ctrl"=>"","style"=>"width: 226px;","v-select"=>"doctor")   )  !!}
+                                                    <span class="md-input-bar"></span>
+                                                </div> 
+
+                                                <p class="uk-text-danger uk-text-small"  v-if="patientForm.doctor.$error.required">doctor is required</p>                                        
+                                            </div>
+
+                                        </div>
 
 
-</section>
 
-</div>
-<div class="actions clearfix "  >
-    <ul aria-label="Pagination" role="menu">
-        <li class="button_previous " aria-disabled="true"  v-on:click="go_to_fill_form_section()"  v-show="in_payment_section==true"  >
-            <a role="menuitem" href="#previous" >
-                <i class="material-icons"></i> Previous
-            </a>
-        </li>
-        <li class="button_next button"   v-on:click="go_to_payment_section()"  aria-hidden="false" aria-disabled="false"  v-show="patientForm.$valid && in_payment_section==false"  > 
-            <a role="menuitem" href="#next"  >Next 
-                <i class="material-icons">
-                </i>
-            </a>
-        </li>
-        <li class="button_finish "    aria-hidden="true"  v-show="patientForm.$valid && in_payment_section==true"  >
-            <input class="md-btn md-btn-primary uk-margin-small-top" type="submit" name="submit_order"  value="Submit"   v-on:click="submit_form"  />
-        </li>
-    </ul>
-</div>
-</div>
-</form>
 
-            <div class="uk-modal" id="confirm_modal"   >
-                <div class="uk-modal-dialog"  v-el:confirm_modal>
-                    <div class="uk-modal-header uk-text-large uk-text-success uk-text-center" >Confirm Order Details?</div>
-                    Are you certain of all the info
-                    {{-- <div class="uk-modal-footer ">
+
+
+                                    </div>
+
+
+                            </section>
+
+                        </div>
+                        <div class="actions clearfix "  >
+                            <ul aria-label="Pagination" role="menu">
+                                <li class="button_previous " aria-disabled="true"  v-on:click="go_to_fill_form_section()"  v-show="in_payment_section==true"  >
+                                    <a role="menuitem" href="#previous" >
+                                        <i class="material-icons"></i> Previous
+                                    </a>
+                                </li>
+                                <li class="button_next button"   v-on:click="go_to_payment_section()"  aria-hidden="false" aria-disabled="false"  v-show="patientForm.$valid && in_payment_section==false"  > 
+                                    <a role="menuitem" href="#next"  >Next 
+                                        <i class="material-icons">
+                                        </i>
+                                    </a>
+                                </li>
+                                <li class="button_finish "    aria-hidden="true"  v-show="patientForm.$valid && in_payment_section==true"  >
+                                    <input class="md-btn md-btn-primary uk-margin-small-top" type="submit" name="submit_order"  value="Submit"   v-on:click="submit_form"  />
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="uk-modal" id="confirm_modal"   >
+                    <div class="uk-modal-dialog"  v-el:confirm_modal>
+                        <div class="uk-modal-header uk-text-large uk-text-success uk-text-center" >Confirm Order Details?</div>
+                        Are you certain of all the info
+                        {{-- <div class="uk-modal-footer ">
         <center>
           <button class="md-btn md-btn-primary uk-margin-small-top" type="submit" name="submit_order" > Cancel</button>
           <button class="md-btn md-btn-primary uk-margin-small-top" type="submit" name="submit_order" > Ok</button>
           </center>
         </div> --}}
+                    </div>
                 </div>
             </div>
+
         </div>
+
+
 
     </div>
 
 
-
-</div>
-
-
-@endsection
-@section('js')
-<script src="{!! url('assets/js/select2.min.js') !!}"></script>
-<script>
+    @endsection
+    @section('js')
+    <script src="{!! url('assets/js/select2.min.js') !!}"></script>
+    <script>
 
 
-//code for ensuring vuejs can work with select2 select boxes
-Vue.directive('select', {
-  twoWay: true,
-  priority: 1000,
-  params: [ 'options'],
-  bind: function () {
-    var self = this
-    $(this.el)
-      .select2({
-        data: this.params.options,
-         width: "resolve"
-      })
-      .on('change', function () {
-        self.vm.$set(this.name,this.value)
-        Vue.set(self.vm.$data,this.name,this.value)
-      })
-  },
-  update: function (newValue,oldValue) {
-    $(this.el).val(newValue).trigger('change')
-  },
-  unbind: function () {
-    $(this.el).off().select2('destroy')
-  }
-})
+    //code for ensuring vuejs can work with select2 select boxes
+    Vue.directive('select', {
+        twoWay: true,
+        priority: 1000,
+        params: ['options'],
+        bind: function () {
+            var self = this
+            $(this.el)
+                    .select2({
+                        data: this.params.options,
+                        width: "resolve"
+                    })
+                    .on('change', function () {
+                        self.vm.$set(this.name, this.value)
+                        Vue.set(self.vm.$data, this.name, this.value)
+                    })
+        },
+        update: function (newValue, oldValue) {
+            $(this.el).val(newValue).trigger('change')
+        },
+        unbind: function () {
+            $(this.el).off().select2('destroy')
+        }
+    })
 
 
-var vm = new Vue({
-  el: "body",
-  ready : function() {
-  },
- data : {
-  
- options: [      
-    ],
-    in_payment_section : false,
-  },
-  methods : {
-    go_to_payment_section : function (event){
-    UIkit.modal.confirm(vm.$els.confirm_modal.innerHTML, function(){
-        
-      vm.$data.in_payment_section=true
-})
+    var vm = new Vue({
+        el: "body",
+        ready: function () {
+        },
+        data: {
+            options: [
+            ],
+            in_payment_section: false,
+        },
+        methods: {
+            go_to_payment_section: function (event) {
+                UIkit.modal.confirm(vm.$els.confirm_modal.innerHTML, function () {
 
-    },
-    submit_form : function(){
-      return (function(modal){ modal = UIkit.modal.blockUI("<div class='uk-text-center'>Saving Data<br/><img class='uk-thumbnail uk-margin-top' src='{!! url('assets/img/spinners/spinner.gif')  !!}' /></div>"); setTimeout(function(){ modal.hide() }, 50000) })();
-    },
-        
-    go_to_fill_form_section : function (event){    
-      vm.$data.in_payment_section=false
-    }
-  }
-})
+                    vm.$data.in_payment_section = true
+                })
 
-</script>
-@endsection
+            },
+            submit_form: function () {
+                return (function (modal) {
+                    modal = UIkit.modal.blockUI("<div class='uk-text-center'>Saving Data<br/><img class='uk-thumbnail uk-margin-top' src='{!! url('assets/img/spinners/spinner.gif')  !!}' /></div>");
+                    setTimeout(function () {
+                        modal.hide()
+                    }, 50000)
+                })();
+            },
+            go_to_fill_form_section: function (event) {
+                vm.$data.in_payment_section = false
+            }
+        }
+    })
+
+    </script>
+    @endsection

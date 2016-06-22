@@ -18,9 +18,10 @@ class QueueDataTable extends DataTable
     {
         
        $queue = $this->query();
+      
         return Datatables::of($queue)
                         
-                        ->addColumn('action', function ($patient) {
+                        ->addColumn('ACTION', function ($patient) {
                             return "<a href=\"show_history/$patient->id/id\" class=\"\"><i title='Click to view history' style='' class=\"sm-icon material-icons\">pageview</i></a>
 <a href=\"add_diagnosis/$patient->id/id\" class=\"\"><i title='Click to add diagnosis' class=\"sm-icon material-icons\">local_hospital</i></a>
 <a href=\"add_prescription/$patient->id/id\" class=\"\"><i title='Click to add prescriptions' class=\"sm-icon material-icons\">local_hospital</i></a>";
@@ -36,9 +37,11 @@ class QueueDataTable extends DataTable
     public function query()
     {
        $date=date("Y-m-d");
-       $queue = \App\Models\QueueModel::query()->where('DATE(DATE)',$date);
+       $doctor= \Auth::user()->id;
+       $queue = \App\Models\QueueModel::query()->where('DATE(DATE)',$date)
+               ->where('FOR_DOCTOR',$doctor);
 
-        return $this->applyScopes($attendance);
+       return $this->applyScopes($queue);
     }
 
     /**
@@ -66,17 +69,18 @@ class QueueDataTable extends DataTable
     private function getColumns()
     {
         return [
-            'id',
+            'ID',
             // add your columns
-            'patient',
-            'nhis_status',
-            'nhis_id',
-            'outcome',
-            'diagnosis1',
-            'diagnosis2',
-            'diagnosis3',
-            'diagnosis4',
-            'date',
+            'PATIENT',
+            'TEST_RECOM1',
+            'TEST_RECOM2',
+            'TEST_RECOM3',
+            'TEST_RECOM4',
+            'DRUG_RECOM1',
+            'DRUG_RECOM2',
+            'DRUG_RECOM3',
+            'DRUG_RECOM4',
+            'PUSHED_BY',
         ];
     }
 
@@ -87,6 +91,6 @@ class QueueDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'attendance';
+        return 'queue';
     }
 }

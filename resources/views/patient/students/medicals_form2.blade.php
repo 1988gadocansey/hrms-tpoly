@@ -116,7 +116,7 @@
                                <table   border="0" bordercolor="">
                          <tr>
                              <td><a href=" "><img class="" style="width:480px;height:162px;"  <?php
-                                     $pic = "0".$data[0]->INDEXNO;
+                                     $pic =$data[0]->INDEXNO;
                                      echo $sys->picture("{!! url(\"albums/students/$pic.JPG\") !!}", 90)
                                      ?>   src='{{url("albums/students/$pic.JPG")}}' alt=" Picture of Student Here"    /></a></td> 
 

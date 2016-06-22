@@ -318,8 +318,19 @@
                                         <p  class=" uk-text-danger uk-text-small  "   v-if="patientForms.weight.$error.required">weight   is required</p>                                      
                                     </div>
                                 </div>
+             <div class="parsley-row">
+                 <div class="uk-input-group">
 
+                     <label for="">Select Consulting Doctor :</label>     
+                     <div class="md-input-wrapper md-input-filled">
+                         {!!   Form::select('doctor',$doctor,old('doctor',''),array("class"=>"md-input","id"=>"doctor","v-model"=>"doctor","v-form-ctrl"=>"","style"=>"width: 226px;","v-select"=>"doctor")   )  !!}
+                         <span class="md-input-bar"></span>
+                     </div> 
 
+                     <p class="uk-text-danger uk-text-small"  v-if="patientForm.doctor.$error.required">doctor is required</p>                                        
+                 </div>
+
+             </div>
 
                             </div>
 

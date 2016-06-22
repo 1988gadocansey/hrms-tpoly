@@ -68,12 +68,36 @@
  <div class="md-card">
      
  <div class="md-card-content">
-<h5>Hospital Attendance Register</h5>  
+<h5>Patients awaiting consulting room</h5>  
   
 
      <div class="uk-overflow-container">
          <div id="print">
-                {!! $dataTable->table() !!}
+           <table class="uk-table uk-table-nowrap uk-table-hover" id="gad"> 
+                                  <thead>
+                                        <tr>
+                                     <th>NO</th>
+                                     <th>FOLDER N<u>O</u></th>
+                                     <th >FIRST NAME</th>
+                                      <th>LASTNAME</th>
+                                      <th>RECOM.TEST 1</th> 
+                                      <th>RECOM. TEST 2</th>
+                                      <th>RECOM. TEST 3</th>
+                                      <th>RECOM. TEST 4</th>
+                                   
+                                      <th>DRUG_RECOM1	</th>
+                                      <th>DRUG_RECOM2</th>
+                                      <th>DRUG_RECOM3</th>
+                                      <th>DRUG_RECOM4</th>
+                                      <th>DOCTOR</th>
+                                      @if(Auth::user()->role=='doctor')
+                                       
+                                      <th>ACTION</th>
+                                         @endif  
+                                        </tr>
+                                    </thead>
+                                    
+                             </table>
          </div>
      </div>
 <div class="md-fab-wrapper">
@@ -85,12 +109,46 @@
  </div>
 @endsection
 @section('js')
- <script src="{!! url('assets/js/select2.min.js') !!}"></script>
- 
-   
+  
+<script>
     
-
-{!! $dataTable->scripts() !!}
+ 
+ var oTable = $('#gad').DataTable({
+     
+        dom: 'C<"clear">lfrtip',
+        buttons: [
+                'csv', 'excel', 'pdf', 'print', 'reset', 'reload'
+            ],
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url:  "{!! route('patient_queue.data') !!}",
+            
+        },
+          columns: [
+              {data: 'id', name: 'ID'},
+              {data: 'PATIENT', name: 'PATIENT'},
+            {data: 'firstname', name: 'firstname'}, 
+            {data: 'surname', name: 'surname'}, 
+            
+            {data: 'TEST_RECOM1', name: 'TEST_RECOM1'},
+             {data: 'TEST_RECOM2', name: 'TEST_RECOM2'},
+              {data: 'TEST_RECOM3', name: 'TEST_RECOM3'},
+            {data: 'TEST_RECOM4', name: 'TEST_RECOM4'},
+            {data: 'DRUG_RECOM1', name: 'DRUG_RECOM1'},
+              {data: 'DRUG_RECOM2', name: 'DRUG_RECOM2'},
+               {data: 'DRUG_RECOM3', name: 'DRUG_RECOM3'},
+                {data: 'DRUG_RECOM4', name: 'DRUG_RECOM4'},
+                 {data: 'FOR_DOCTOR', name: 'FOR_DOCTOR'}
+                
+                     
+                ]
+    });
+     
+     
+    
+</script>
+ 
 
     
  

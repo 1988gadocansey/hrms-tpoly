@@ -57,18 +57,7 @@ Route::group(['middleware' => ['web']], function () {
         return view('clone');
     });
 
-    Route::controller('/banks', 'BankController', [
-        'anyData' => 'banks.data',
-        'getIndex' => 'banks',
-        
-    ]);
-   
-    // fees route
-    Route::controller('/view_fees', 'FeeController', [
-        'anyData' => 'view_fees.data',
-        'getIndex' => 'view_fees',
-        
-    ]);
+     
     
     // records management routes
     Route::get('/new_visit', 'PatientController@showVisitForm');
@@ -86,20 +75,23 @@ Route::group(['middleware' => ['web']], function () {
     //Route::get('/attendance_', 'PatientController@attendanceRegister');
     Route::resource('/attendance', 'AttendanceController');
     
-     Route::get('/view_payments_master', 'FeeController@masterLedger');
-     Route::get('/fee_summary', 'FeeController@masterLedger');
-     Route::get('/owing_paid', 'FeeController@owingAndPaid');
-     Route::post('/fireOwingSMS', 'FeeController@sendFeeSMS');
-    Route::get('search/autocomplete', 'SearchController@autocomplete');
-    Route::get('/show_student/{id}/id', 'StudentController@show');
+     Route::controller('patient_queue', 'QueueController', [
+        'anyData' => 'patient_queue.data',
+        'getIndex' => 'patient_queue',
+    ]);
+    // Queue Processings
+    //Route::resource('/patient_queue', 'QueueController');
     
-    
-    
-    // hospital records
-     Route::get('/student_medicals', 'PatientController@showMedicalForm');
+    // student medical routes
+    Route::get('/student_medicals', 'PatientController@showMedicalForm');
     Route::post('/student_medicals', 'PatientController@processMedicalForm');
     Route::post('/store_medicals', 'PatientController@storeMedicals');
     Route::get('/search_folder', 'PatientController@searchFolder');
-    
     Route::post('/search_folder', 'PatientController@displayFolder');
+    
+    // laboratory section
+     Route::controller('tests', 'TestController', [
+        'anyData' => 'tests.data',
+        'getIndex' => 'tests',
+    ]);
 });

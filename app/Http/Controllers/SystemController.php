@@ -36,6 +36,11 @@ class SystemController extends Controller
                 ->lists('NAME', 'id');
          return $student;
     }
+     public function getDoctorList() {
+         $doctor = \DB::table('tpoly_workers')->where('designation','Doctor')
+                ->lists('Name', 'Name');
+         return $doctor;
+    }
     public function getHospitalID() {
          $no = \DB::table('tpoly_hospitalID')->lists('NO');
                 

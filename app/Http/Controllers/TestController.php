@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\StudentModel;
+use App\Models\TestModel;
 use App\Models;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-class PatientController extends Controller
+class TestController extends Controller
 {
     public function __construct()
     {
@@ -25,27 +25,27 @@ class PatientController extends Controller
   public function getIndex(Request $request)
     {
         
-        return view('patient.index');
+        return view('laboratory.test');
     }
     public function anyData(Request $request)
     {
          
-         $patients = Models\PatientModel::select([ "*"]);
+         $tests = Models\TestModel::select([ "*"]);
 
-        return Datatables::of($patients)
-            ->addColumn('action', function ($patient) {
+        return Datatables::of($tests)
+            ->addColumn('action', function ($test) {
                 return
-                 "<a href=\"editPatient/$patient->id/id\" ><i title='click to edit patient data'class=\"md-icon material-icons\">&#xE254;</i></a> 
+                 "<a href=\"editPatient/$test->ID/id\" ><i title='click to edit patient data'class=\"md-icon material-icons\">&#xE254;</i></a> 
            
-                 <a href=\"showPatient/$patient->id/id\" class=\"\"><i title='Click to view patient history details' class=\"md-icon material-icons\">&#xE88F;</i></a>";
+                 <a href=\"showPatient/$test->ID/id\" class=\"\"><i title='Click to view patient history details' class=\"md-icon material-icons\">&#xE88F;</i></a>";
               
                 
             })
             
-            ->editColumn('id', ' {{$id}}')
+            ->editColumn('id', ' {{$ID}}')
             ->setRowId('id')
-            ->setRowClass(function ($patient) {
-                return $patient->ID % 2 == 0 ? 'uk-text-success' : 'uk-text-warning';
+            ->setRowClass(function ($test) {
+                return $test->ID % 2 == 0 ? 'uk-text-success' : 'uk-text-warning';
             })
             ->setRowData([
                 'id' => 'test',

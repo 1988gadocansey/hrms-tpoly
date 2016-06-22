@@ -18,5 +18,11 @@ class QueueModel extends Model
     protected $primaryKey="ID";
     protected $guarded = ['ID'];
     public $timestamps = false;
-     
+    public function patient(){
+        return $this->belongsTo('App\Models\PatientModel', "PATIENT","hospital_id");
+    }
+    public function doctor(){
+        return $this->belongsTo('App\Models\WorkersModel', "DOCTOR","id");
+    }
+    
 }
