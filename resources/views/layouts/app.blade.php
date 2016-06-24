@@ -320,7 +320,7 @@
                          <li><a href='{!! url("new_visit") !!}'>New Visit</a></li>
                             <li><a href='{!! url("old_visit") !!}'>Old Visit</a></li>
                          <li><a href='{!! url("patient_queue") !!}'>Patients Waiting</a></li>
-                        <li><a href='{!! url("search_folder") !!}'> Search Folder</a></li>
+                        
                         <li><a href='{!! url("patients") !!}'>Patients Register</a></li>
                         <li><a href='{!! url("attendance") !!}'>Attendance Register</a></li>
                        

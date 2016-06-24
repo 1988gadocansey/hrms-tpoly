@@ -31,15 +31,14 @@ class QueueController extends Controller
            
             ->addColumn('action', function ($patient) {
                 return
-                 "<a href=\"editPatient/$patient->ID/id\" ><i title='click to edit patient data'class=\"md-icon material-icons\">&#xE254;</i></a> 
+                 "<a href=\"prescribe_test/$patient->PATIENT/id\" ><i title='click to view details and initiate lab test'class=\"md-icon material-icons\">&#xE254;</i></a> 
            
-                 <a href=\"showPatient/$patient->ID/id\" class=\"\"><i title='Click to view patient history details' class=\"md-icon material-icons\">&#xE88F;</i></a>";
+                 <a href=\"prescribte_drugs/$patient->PATIENT/id\" class=\"\"><i title='Click to view patient history details and precscribe test' class=\"md-icon material-icons\">&#xE254;</i></a>";
               
                 
-            });
-            }
-            else{
-                  return Datatables::of($queue)
+            })
+             
+                 
             ->editColumn('id', ' {{$ID}}')
             ->setRowId('id')
             ->setRowClass(function ($patient) {
@@ -54,6 +53,84 @@ class QueueController extends Controller
             
             ->make(true);
                           
+            }
+          elseif(\Auth::user()->role=='Laboratory'){
+                return Datatables::of($queue)
+           
+            ->addColumn('action', function ($patient) {
+                return
+                 "<a href=\"editPatient/$patient->PATIENT/id\" ><i title='click to view patient data'class=\"md-icon material-icons\">&#xE254;</i></a> 
+           
+                 <a href=\"showPatient/$patient->PATIENT/id\" class=\"\"><i title='Click to add lab test results' class=\"md-icon material-icons\">&#xE88F;</i></a>";
+              
+                
+            })
+             
+                 
+            ->editColumn('id', ' {{$ID}}')
+            ->setRowId('id')
+            ->setRowClass(function ($patient) {
+                return $patient->PATIENT % 2 == 0 ? 'uk-text-success' : 'uk-text-warning';
+            })
+            ->setRowData([
+                'id' => 'test',
+            ])
+            ->setRowAttr([
+                'color' => 'red',
+            ])
+            
+            ->make(true);
+               
+            }
+    
+        elseif(\Auth::user()->role=='pharmacy'){
+                return Datatables::of($queue)
+           
+            ->addColumn('action', function ($patient) {
+                return
+                 "<a href=\"editPatient/$patient->PATIENT/id\" ><i title='click to view patient data'class=\"md-icon material-icons\">&#xE254;</i></a> 
+           
+                 <a href=\"showPatient/$patient->PATIENT/id\" class=\"\"><i title='Click to precribe drugs' class=\"md-icon material-icons\">&#xE88F;</i></a>";
+              
+                
+            })
+             
+                 
+            ->editColumn('id', ' {{$ID}}')
+            ->setRowId('id')
+            ->setRowClass(function ($patient) {
+                return $patient->PATIENT % 2 == 0 ? 'uk-text-success' : 'uk-text-warning';
+            })
+            ->setRowData([
+                'id' => 'test',
+            ])
+            ->setRowAttr([
+                'color' => 'red',
+            ])
+            
+            ->make(true);
+               
+            }
+            
+            elseif(\Auth::user()->role=='records'){
+                return Datatables::of($queue)
+           
+            
+                 
+            ->editColumn('id', ' {{$ID}}')
+            ->setRowId('id')
+            ->setRowClass(function ($patient) {
+                return $patient->PATIENT % 2 == 0 ? 'uk-text-success' : 'uk-text-warning';
+            })
+            ->setRowData([
+                'id' => 'test',
+            ])
+            ->setRowAttr([
+                'color' => 'red',
+            ])
+            
+            ->make(true);
+               
             }
     }
     

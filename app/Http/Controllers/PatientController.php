@@ -281,6 +281,37 @@ class PatientController extends Controller
             }
           }
     }
+    public function loadPatientDetails(Request $request, $id, SystemController $sys) {
+        $patient=$id;
+         
+        $history=  $this->getHistory($patient);
+        $lab=  $this->getLabHistory($patient);
+        $drug=  $this->getDrugHistory($patient);
+        $test=  $this->getTests();
+        $sql= Models\PatientModel::where("hospital_id",$patient)->get();
+        $doctor=$sys->getDoctorList();
+         if(count($sql)==0){
+      
+          return redirect("/patients")->with("error","<span style='font-weight:bold;font-size:13px;'> $request->input('q') does not exist!</span>");
+          }
+          else{
+            if(\Auth::user()->role=='doctor'){
+               return view("patient.visit_transaction")->with( 'data',$sql)->with('drug', $this->getDrugs())->with('test',$this->getTests())->with('history',$history)->with('lab',$lab)->with('drug',$drug);
+            }
+            elseif (\Auth::user()->role=='records') {
+                 return view("patient.records_visit_transaction")->with( 'data',$sql)->with('drug', $this->getDrugs())->with('test',$this->getTests())->with('history',$history)->with('lab',$lab)->with('drug',$drug)->with('doctor', $doctor);
+        
+            }
+            elseif (\Auth::user()->role=='pharmacy') {
+                 return view("patient.pharmacy_visit_transaction")->with( 'data',$sql)->with('drug', $this->getDrugs())->with('test',$this->getTests())->with('history',$history)->with('lab',$lab)->with('drug',$drug);
+        
+            }
+             elseif (\Auth::user()->role=='Laboratory') {
+                 return view("patient.lab_visit_transaction")->with( 'data',$sql)->with('drug', $this->getDrugs())->with('test',$this->getTests())->with('history',$history)->with('lab',$lab)->with('drug',$drug);
+        
+            }
+          }
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -361,7 +392,7 @@ class PatientController extends Controller
                     $queue->FOR_DOCTOR=$request->input('doctor');
                      $queue->PUSHED_BY=$user;
                     if($queue->save()){
-                  return redirect("/patients")->with("success",array("<span style='font-weight:bold;font-size:13px;'>  Patient with hospital code $hospitalCode successfully saved!</span> "));
+                  return redirect("/patient_queue")->with("success",array("<span style='font-weight:bold;font-size:13px;'>  Patient with hospital code $hospitalCode successfully saved!</span> "));
                     
                     }
                  
@@ -396,12 +427,12 @@ class PatientController extends Controller
 
 
                            $queue = new Models\QueueModel();
-                           $queue->PATIENT = $request->input('code');
+                           $queue->PATIENT =$request->input('code');
                            $folder=$request->input('code');
                            $queue->FOR_DOCTOR = $request->input('doctor');
                            $queue->PUSHED_BY = $user;
                            if ($queue->save()) {
-                               return redirect("/patients")->with("success", array("<span style='font-weight:bold;font-size:13px;'>  Patient with folder no $folder successfully sent to consulting room!</span> "));
+                               return redirect("/patient_queue")->with("success", array("<span style='font-weight:bold;font-size:13px;'>  Patient with folder no $folder successfully sent to consulting room!</span> "));
                            }
                        }
                    }

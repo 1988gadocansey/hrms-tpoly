@@ -41,8 +41,8 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('/password/email', 'Auth\PasswordController@postEmail');
 
         // Password reset routes...
-        Route::get('/reset', 'UserController@getReset');
-        Route::post('/reset', 'UserController@postReset');
+        Route::get('/reset', 'Auth\PasswordController@getReset');
+        Route::post('/reset', 'Auth\PasswordController@postReset');
 
     
     
@@ -88,6 +88,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/store_medicals', 'PatientController@storeMedicals');
     Route::get('/search_folder', 'PatientController@searchFolder');
     Route::post('/search_folder', 'PatientController@displayFolder');
+    
+    Route::get('/prescribe_test/{id}/id', 'PatientController@loadPatientDetails');
+     
     
     // laboratory section
      Route::controller('tests', 'TestController', [

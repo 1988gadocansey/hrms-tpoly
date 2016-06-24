@@ -68,7 +68,7 @@
  <div class="md-card">
      
  <div class="md-card-content">
-<h5>Patients awaiting consulting room</h5>  
+<h5>Consulting Room</h5>  
   
 
      <div class="uk-overflow-container">
@@ -80,15 +80,7 @@
                                      <th>FOLDER N<u>O</u></th>
                                      <th >FIRST NAME</th>
                                       <th>LASTNAME</th>
-                                      <th>RECOM.TEST 1</th> 
-                                      <th>RECOM. TEST 2</th>
-                                      <th>RECOM. TEST 3</th>
-                                      <th>RECOM. TEST 4</th>
-                                   
-                                      <th>DRUG_RECOM1	</th>
-                                      <th>DRUG_RECOM2</th>
-                                      <th>DRUG_RECOM3</th>
-                                      <th>DRUG_RECOM4</th>
+                                      <th>LAB RESULT</th>
                                       <th>DOCTOR</th>
                                       @if(Auth::user()->role=='doctor')
                                        
@@ -100,11 +92,13 @@
                              </table>
          </div>
      </div>
+   @if(Auth::user()->role=='records')
 <div class="md-fab-wrapper">
-    <a href='{!! url("new_visit") !!}' title="click to add more patients" class="md-fab md-fab-small md-fab-accent md-fab-wave"  >
+    <a href='{!! url("old_visit") !!}' title="click to add more visit" class="md-fab md-fab-small md-fab-accent md-fab-wave"  >
             <i class="material-icons md-18">&#xE145;</i>
         </a>
     </div>
+  @endif
  </div>
  </div>
 @endsection
@@ -131,16 +125,10 @@
             {data: 'firstname', name: 'firstname'}, 
             {data: 'surname', name: 'surname'}, 
             
-            {data: 'TEST_RECOM1', name: 'TEST_RECOM1'},
-             {data: 'TEST_RECOM2', name: 'TEST_RECOM2'},
-              {data: 'TEST_RECOM3', name: 'TEST_RECOM3'},
-            {data: 'TEST_RECOM4', name: 'TEST_RECOM4'},
-            {data: 'DRUG_RECOM1', name: 'DRUG_RECOM1'},
-              {data: 'DRUG_RECOM2', name: 'DRUG_RECOM2'},
-               {data: 'DRUG_RECOM3', name: 'DRUG_RECOM3'},
-                {data: 'DRUG_RECOM4', name: 'DRUG_RECOM4'},
-                 {data: 'FOR_DOCTOR', name: 'FOR_DOCTOR'}
-                
+             {data: 'LAB_RESULT', name: 'LAB_RESULT'},
+             {data: 'FOR_DOCTOR', name: 'FOR_DOCTOR'},
+             {data: 'action', name: 'action', orderable: false, searchable: false}
+            
                      
                 ]
     });

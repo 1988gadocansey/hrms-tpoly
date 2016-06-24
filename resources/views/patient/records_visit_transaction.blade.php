@@ -174,7 +174,7 @@
                                     </div>
 
 
-                                    <input type="hidden" name="code" value="      {{ $data[0]->hospital_id}}"/>
+                                    <input type="hidden" name="code" value="{{$data[0]->hospital_id}}"/>
                                  
 
                                     <div class="parsley-row">
