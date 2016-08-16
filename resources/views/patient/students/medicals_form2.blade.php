@@ -22,14 +22,16 @@
  <div align="center">
      <div class="uk-width-xLarge-1-1">
   <h5 > Medical Records update for | {!! $year !!} Academic Year</h5>
+   
+   <center align=" " class="style1">Personal Records of {!! $data[0]->TITLE.$data[0]->NAME!!}</center>
+                 
              <hr>
                    
              <div class="uk-grid" data-uk-grid-margin>
                  
                    
                   <div align="center">
-                      <center align=" " class="style1">Personal Records of {!! $data[0]->TITLE.$data[0]->NAME!!}</center>
-                  </div>
+                      </div>
      <div class="uk-grid" data-uk-grid-margin data-uk-grid-match="{target:'.md-card-content'}">
                 <div class="uk-width-medium-1-2">
                     <div class="md-card">
@@ -112,8 +114,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="uk-grid uk-grid-medium uk-grid-width-medium-1-2 uk-grid-width-large-1-3">
-                               <table   border="0" bordercolor="">
+         <div class="uk-grid uk-grid-medium " style="">
+             <table   border="1" bordercolor="" style="margin-left:12px">
                          <tr>
                              <td><a href=" "><img class="" style="width:480px;height:162px;"  <?php
                                      $pic =$data[0]->INDEXNO;
@@ -129,7 +131,7 @@
                 </div>
     
              
-          <div class="uk-width-xLarge-1-1">
+          <div class="uk-width-large-1-2">
                 <div class="md-card">
                     <div class="md-card-content">
                     <div style=" " id="payment_div">

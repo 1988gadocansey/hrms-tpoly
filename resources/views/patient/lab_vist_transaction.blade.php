@@ -208,7 +208,6 @@
                                                 
                                             </tr>
                                         </thead>
-
                                         <tfoot>
                                             <tr>
                                                <th>Date</th>

@@ -24,4 +24,7 @@ class LabModel extends Model
      public function testName(){
         return $this->belongsTo('App\Models\TestModel', "TEST","ID");
     }
+     public function student(){
+        return $this->belongsTo('App\Models\StudentModel', "PATIENT","INDEXNO");
+    }
 }

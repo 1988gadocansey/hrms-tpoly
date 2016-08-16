@@ -9,7 +9,7 @@
     <link rel="icon" type="image/png" href="assets/img/favicon-16x16.png" sizes="16x16">
     <link rel="icon" type="image/png" href="assets/img/favicon-32x32.png" sizes="32x32">
 
-    <title>HRMS - Takoradi Polytechnic</title>
+    <title>HRMS - Takoradi Technical University</title>
 
    
     <!-- uikit -->
@@ -36,10 +36,10 @@
     <header id="header_main">
         <div class="header_main_content">
             <nav class="uk-navbar">
-                                    <div class="main_logo_top">
-                                        <a href="/dashboard"><img src="assets/img/logo.png" alt="" height="15" width="71"/></a>
-                                        <span class="" style="color:white"> Hospital Records Management System</span>
-                                    </div>
+                                     <div class="main_logo_top">
+                    <a href="/dashboard"><img src="assets/img/logo.png" alt="" height="15" width="71"/></a>
+                    <span  style="color:white"  >Welcome {{@Auth::user()->name }} |  Designation : {{@Auth::user()->role }}</span>
+                </div>
                                 
                 <!-- secondary sidebar switch -->
                 <a href="#" id="sidebar_secondary_toggle" class="sSwitch sSwitch_right sidebar_secondary_check">
@@ -193,6 +193,7 @@
                         <li><a href='{!! url("search_folder") !!}'> Search Folder</a></li>
                         <li><a href='{!! url("patients") !!}'>Patients Register</a></li>
                         <li><a href='{!! url("attendance") !!}'>Attendance Register</a></li>
+                         <li><a href='{!! url("showSearch") !!}'>Print Student Medical Result</a></li>
                         
                     </ul>
                 </div>

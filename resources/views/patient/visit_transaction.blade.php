@@ -21,7 +21,7 @@
         </div>
     </div>
     @endif
-
+    
 
     @if (count($errors) > 0)
 
@@ -138,7 +138,7 @@
                                   <li class="named_tab"><a href="#">Lab Tests</a></li>
                                 <li><a href="#">Drugs</a></li>
                               
-                                <li class="uk-disabled"><a href="#">NHIS</a></li>
+                                <li class="named_tab"><a href="#">Vitals</a></li>
                             </ul>
                             <ul id="tabs_1_content" class="uk-switcher uk-margin">
                                 <div>
@@ -269,7 +269,38 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <li>Content 4</li>
+                                <div>
+                                    <table id="dt_tableTools" class="uk-table   uk-table-hover" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                
+                                                <th>VISIT</th>
+                                                <th>BP</th>
+                                                <th>TEMPERATURE</th>
+                                                <th>HEIGHT</th>
+                                                <th>WEIGHT</th>
+                                                
+                                            </tr>
+                                        </thead>
+
+                                    
+                                        <tbody>
+                                            @foreach($vitals as $keys=>$vital) 
+                                          
+                                            <tr align="">
+                                                <td> {{ @$vital->DATE }}</td>
+
+                                                <td> {{ @$vital->BP }}</td>
+                                                <td> {{ @$vital->TEMPERATURE }}</td>
+                                                <td> {{ @$vital->HEIGHT }}</td>
+                                                <td> {{ @$vital->WEIGHT }}</td>
+                                                 
+                                                
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </ul>
                         </div>
                     </div>

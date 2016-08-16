@@ -52,7 +52,7 @@ Route::group(['middleware' => ['web']], function () {
     ]);
      
     // routes for learning
-    Route::get('autocomplete', 'SearchController@index');
+    Route::get('autocomplete', 'SearchController@autocomplete');
     Route::get('clone', function () {
         return view('clone');
     });
@@ -88,6 +88,11 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/store_medicals', 'PatientController@storeMedicals');
     Route::get('/search_folder', 'PatientController@searchFolder');
     Route::post('/search_folder', 'PatientController@displayFolder');
+    
+    Route::get('/showSearch', 'PatientController@showSearchForm');
+    Route::post('/showSearch', 'PatientController@processPrint');
+    
+    
     
     Route::get('/prescribe_test/{id}/id', 'PatientController@loadPatientDetails');
      

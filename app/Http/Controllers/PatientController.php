@@ -65,8 +65,8 @@ class PatientController extends Controller
         
         $student=  explode(',',$request->input('q'));
         $student=$student[0];
-        
-        $sql= StudentModel::where("INDEXNO",$student)->get();
+      //  $s=new StudentModel();
+        $sql=StudentModel::where("INDEXNO",$student)->get();
         //dd($sql);
          if(count($sql)==0){
       
@@ -78,6 +78,33 @@ class PatientController extends Controller
               $sem=$array[0]->SEMESTER;
               $year=$array[0]->YEAR;
                return view("patient.students.medicals_form2")->with( 'data',$sql)->with('year', $year)->with('test',$this->getTests());
+      
+          }
+    }
+    // print medical result
+    public function showSearchForm(Request $request) {
+        return view("patient.students.printForm");
+    }
+    public function processPrint(Request $request) {
+        
+        $student=  explode(',',$request->input('q'));
+        $student=$student[0];
+        
+        $sql= Models\LabModel::where("PATIENT",$student)->get();
+         $query=  Models\StudentModel::where("INDEXNO",$student)->first();
+         if(count($sql)==0){
+      
+          return redirect("/showSearch")->with("error","<span style='font-weight:bold;font-size:13px;'> $request->input('q') does not exist!</span>");
+          }
+          else{
+              $sys=new SystemController();
+              $array=$sys->getSemYear();
+              $sem=$array[0]->SEMESTER;
+              $year=$array[0]->YEAR;
+              //dd($sql);
+               return view("students.view")->with( 'data',$sql)->with('year', $year)
+                       ->with('student', $query)
+                       ->with('test',$this->getTests());
       
           }
     }
@@ -109,9 +136,18 @@ class PatientController extends Controller
                 ->paginate(100);
         return $history;
     }
+    // get vital history
+     public function geVitalsHistory($patient){
+         $history = Models\VitalsModel::query()->where('PATIENT',$patient)->orderby('DATE','DESC')
+                ->paginate(100);
+        return $history;
+    }
     public function storeMedicals(Request $request) {
          //get the current user in session
         $user = \Auth::user()->id;
+             \DB::beginTransaction();
+        try {
+
               // Lab - heamatlology
        /* $heamatology=new Models\HeamatologyModel();
         $heamatology->PATIENT=$request->input('student');
@@ -238,12 +274,15 @@ class PatientController extends Controller
       }
         
        if($laboratory){
-      
+            \DB::commit();
            
            return redirect("/students")->with("success",array("<span style='font-weight:bold;font-size:13px;'>  Records successfully saved!</span> "));
         }
         else{
             redirect()->back()->withErrors('error', 'Error in saving records');
+        }
+     } catch (\Exception $e) {
+            \DB::rollback();
         }
                
     }
@@ -254,9 +293,11 @@ class PatientController extends Controller
     public function processOldVisitForm(Request $request,  SystemController $sys) {
         $patient=  explode(',',$request->input('q'));
         $patient=$patient[0];
-        $history=  $this->getHistory($patient);
-        $lab=  $this->getLabHistory($patient);
-        $drug=  $this->getDrugHistory($patient);
+        $history=  @$this->getHistory($patient);
+        $lab=  @$this->getLabHistory($patient);
+        $drug=  @$this->getDrugHistory($patient);
+        $vitals= $this->geVitalsHistory($patient);
+         
         $sql= Models\PatientModel::where("hospital_id",$patient)->get();
         $doctor=$sys->getDoctorList();
          if(count($sql)==0){
@@ -265,7 +306,8 @@ class PatientController extends Controller
           }
           else{
             if(\Auth::user()->role=='doctor'){
-               return view("patient.visit_transaction")->with( 'data',$sql)->with('drug', $this->getDrugs())->with('test',$this->getTests())->with('history',$history)->with('lab',$lab)->with('drug',$drug);
+               return view("patient.visit_transaction")->with('data',$sql)->with('drug', $this->getDrugs())->with('test',$this->getTests())->with('history',$history)->with('lab',$lab)->with('drug',$drug)
+                       ->with('vitals',$vitals);
             }
             elseif (\Auth::user()->role=='records') {
                  return view("patient.records_visit_transaction")->with( 'data',$sql)->with('drug', $this->getDrugs())->with('test',$this->getTests())->with('history',$history)->with('lab',$lab)->with('drug',$drug)->with('doctor', $doctor);
@@ -289,6 +331,8 @@ class PatientController extends Controller
         $drug=  $this->getDrugHistory($patient);
         $test=  $this->getTests();
         $sql= Models\PatientModel::where("hospital_id",$patient)->get();
+        $vitals= $this->geVitalsHistory($patient);
+        
         $doctor=$sys->getDoctorList();
          if(count($sql)==0){
       
@@ -296,7 +340,7 @@ class PatientController extends Controller
           }
           else{
             if(\Auth::user()->role=='doctor'){
-               return view("patient.visit_transaction")->with( 'data',$sql)->with('drug', $this->getDrugs())->with('test',$this->getTests())->with('history',$history)->with('lab',$lab)->with('drug',$drug);
+               return view("patient.visit_transaction")->with( 'data',$sql)->with('drug', $this->getDrugs())->with('test',$this->getTests())->with('history',$history)->with('lab',$lab)->with('drug',$drug)->with('vitals',$vitals);
             }
             elseif (\Auth::user()->role=='records') {
                  return view("patient.records_visit_transaction")->with( 'data',$sql)->with('drug', $this->getDrugs())->with('test',$this->getTests())->with('history',$history)->with('lab',$lab)->with('drug',$drug)->with('doctor', $doctor);
@@ -344,7 +388,9 @@ class PatientController extends Controller
     public function storeVist(Request $request) {
         
          $this->validate($request, ['title' => 'required', 'fname' => 'required', 'surname' => 'required', 'dob' => 'required', 'gender' => 'required', 'marital_status' => 'required', 'temperature' => 'required', 'contact' => 'required', 'hometown' => 'required', 'dob' => 'required', 'phone' => 'required', 'height' => 'required', 'weight' => 'required','bp' => 'required' ]);
-        $user=\Auth::id();
+        \DB::beginTransaction();
+        try {
+         $user=\Auth::id();
         $sys=new SystemController();
         $code=$sys->getHospitalID();
         $hospitalCode=\date("Y").$code[0];
@@ -392,6 +438,7 @@ class PatientController extends Controller
                     $queue->FOR_DOCTOR=$request->input('doctor');
                      $queue->PUSHED_BY=$user;
                     if($queue->save()){
+                        \DB::commit();
                   return redirect("/patient_queue")->with("success",array("<span style='font-weight:bold;font-size:13px;'>  Patient with hospital code $hospitalCode successfully saved!</span> "));
                     
                     }
@@ -401,12 +448,17 @@ class PatientController extends Controller
         else{
             redirect()->back()->withErrors('error', 'Error in saving records');
         }
+         } catch (\Exception $e) {
+            \DB::rollback();
+        }
     }
   
     
      
     public function saveVisit(Request $request) {
             $user=\Auth::id();
+             \DB::beginTransaction();
+        try {
             $sys=new SystemController();
             $vitals=new Models\VitalsModel();
             //dd(\Auth::user()->role);
@@ -432,10 +484,14 @@ class PatientController extends Controller
                            $queue->FOR_DOCTOR = $request->input('doctor');
                            $queue->PUSHED_BY = $user;
                            if ($queue->save()) {
+                                \DB::commit();
                                return redirect("/patient_queue")->with("success", array("<span style='font-weight:bold;font-size:13px;'>  Patient with folder no $folder successfully sent to consulting room!</span> "));
                            }
                        }
                    }
+        }  catch (\Exception $e) {
+            \DB::rollback();
+        }
     }
     
     

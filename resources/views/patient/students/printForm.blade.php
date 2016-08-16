@@ -37,7 +37,7 @@
      <div class="md-card">
          <div class="md-card-content" style="height: 300px;">
              <h5 >Search student here </h5>
-             <form method="POST" action="{{ url('student_medicals') }}"  accept-charset="utf-8"  name="applicationForm"  v-form>
+             <form method="POST" action=""  accept-charset="utf-8"  name="applicationForm"  v-form>
                   <input type="hidden" name="_token" value="{!! csrf_token() !!}"> 
              <div class="uk-grid" data-uk-grid-margin>
                  
